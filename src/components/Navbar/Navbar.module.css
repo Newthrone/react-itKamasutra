@@ -1,0 +1,13 @@
+.navbar {
+  margin: 0 0 100px;
+}
+
+.navbar__item a {
+  padding: 5px 0;
+  color: #0c0505;
+  text-decoration: none;
+}
+
+.navbar__item a.activeLink {
+  font-weight: bold;
+}
