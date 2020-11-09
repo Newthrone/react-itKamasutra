@@ -1,0 +1,72 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  padding: 0 50px;
+}
+
+.pageList {
+  padding: 0;
+  margin: 5px 15px;
+  list-style-type: none;
+}
+
+.pageItem {
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 45px;
+  min-height: 45px;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 10px 5px;
+  background-color: beige;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* .pageItemActive {
+  font-weight: bold;
+  cursor: none;
+  pointer-events: none;
+} */
+
+.pageItemInteractive {
+  /* height: 45px; */
+  width: 70px;
+  border: none;
+  /* border-radius: 5px; */
+  text-align: center;
+  vertical-align: bottom;
+  /* font-size: 20px; */
+  font-weight: bold;
+}
+
+.pageItemInteractive::-webkit-outer-spin-button,
+.pageItemInteractive::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.btnEdgePage {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-bottom: 5px solid orange;
+  border-left: 5px solid orange;
+  background-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+}
+
+.btnEdgePage:focus {
+  outline: none;
+}
+
+.btnFirstPage {
+  transform: rotate(45deg);
+}
+
+.btnEndPage {
+  transform: rotate(225deg);
+}

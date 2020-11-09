@@ -1,44 +1,31 @@
 import React from 'react';
 import styles from './users.module.css';
+import userPhotoDefault from './../../assets/images/userDefault.jpg';
+import Pagination from '../Pagination/Pagination';
 
 const Users = (props) => {
-  console.log('Users begin: props', props);
-  console.log('in Users: props.users.length', props.users.length);
-  if (props.users.length === 0) {
-    props.setUsers([
-    { id: 1, fullName: 'Dimych', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss', location: {city: 'Krasnodar', country: 'Russia'}, followed: true, },
-    // { id: 2, fullName: 'Andrew', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss too', location: {city: 'Moscow', country: 'Russia'}, followed: false, },
-    // { id: 3, fullName: 'Sveta', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss too', location: {city: 'Kirov', country: 'Russia'}, followed: true, },
-    // { id: 4, fullName: 'Tayler', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss too', location: {city: 'Boston', country: 'USA'}, followed: false, },
-    // { id: 5, fullName: 'Mika', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss too', location: {city: 'Helsinki', country: 'Finland'}, followed: true, },
-    // { id: 6, fullName: 'Andrew', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss too', location: {city: 'Vancouver', country: 'Canada'}, followed: true, },
-    ])
-  }
+  const {users, totalPages, currentPage, setCurrentPage, requestPage} = props;
 
   return (
     <div>
-      {props.users.map(user => <div key={user.id}>
-          <span>
-            <div>
-              <img className={styles.userAvatar} src={user.photoUrl} alt="avatar"/>
-            </div>
-            <div>
-              {user.followed
-                ? <button onClick={() => props.unfollowUser(user.id)}>Unfollow</button>
-                : <button onClick={() => props.followUser(user.id)}>Follow</button>
-              }
-            </div>
-          </span>
-          <span>
-            <span>
-              <div>{user.fullName}</div>
-              <div>{user.status}</div>
-            </span>
-            <span>
-              <div>{user.location.city}</div>
-              <div>{user.location.country}</div>
-            </span>
-          </span>
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        requestPage={requestPage}
+      />
+      {users.map(user => <div key={user.id}>
+          <article className={styles.user}>
+            <img className={styles.userAvatar} src={user.photos.small != null
+              ? user.photos.small
+              : userPhotoDefault} alt="avatar"/>
+            {user.followed
+              ? <button className={styles.userBtnFollow} onClick={() => props.unfollowUser(user.id)}>Unfollow</button>
+              : <button className={styles.userBtnUnfollow} onClick={() => props.followUser(user.id)}>Follow</button>
+            }
+            <div className={styles.userName}>{user.name}</div>
+            <div>{user.status ? user.status : 'без статуса'}</div>
+          </article>
         </div>
       )}
     </div>
@@ -46,3 +33,57 @@ const Users = (props) => {
 }
 
 export default Users;
+/*
+import React, { Component } from 'react';
+import * as axios from 'axios';
+import styles from './users.module.css';
+import userPhotoDefault from './../../assets/images/userDefault.jpg';
+import Pagination from '../Pagination/Pagination';
+
+class Users extends Component {
+
+  requestPage = (currentPage) => {
+    const { pageSize } = this.props;
+
+    axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${currentPage}`)
+      .then(response => {
+        this.props.setTotalPages(Math.ceil(response.data.totalCount/this.props.pageSize))
+        this.props.setUsers(response.data.items)
+      })
+  }
+
+  componentDidMount() {
+    this.requestPage(this.props.currentPage);
+  }
+
+  render() {
+    const {totalPages, currentPage, setCurrentPage} = this.props;
+    return (
+      <div>
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          requestPage={this.requestPage}
+        />
+        {this.props.users.map(user => <div key={user.id}>
+            <article className={styles.user}>
+              <img className={styles.userAvatar} src={user.photos.small != null
+                ? user.photos.small
+                : userPhotoDefault} alt="avatar"/>
+              {user.followed
+                ? <button className={styles.userBtnFollow} onClick={() => this.props.unfollowUser(user.id)}>Unfollow</button>
+                : <button className={styles.userBtnUnfollow} onClick={() => this.props.followUser(user.id)}>Follow</button>
+              }
+              <div className={styles.userName}>{user.name}</div>
+              <div>{user.status ? user.status : 'без статуса'}</div>
+            </article>
+          </div>
+        )}
+      </div>
+    )
+  }
+}
+
+export default Users;
+ */

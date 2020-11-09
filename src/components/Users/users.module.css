@@ -1,4 +1,34 @@
+.user {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: repeat (3, 1fr);
+  justify-content: space-around;
+  justify-items: center;
+  align-items: center;
+  grid-column-gap: 30px;
+  grid-row-gap: 10px;
+  padding: 5px 10px;
+  margin: 5px;
+  background-color: #e6d082;
+  border-radius: 5px;
+}
+
 .userAvatar {
+  grid-row: 1 / span 2;
   width: 70px;
   border-radius: 50%;
+}
+
+.userBtnFollow {
+  grid-row-start: 3;
+  padding: 3px 10px;
+  background-color: wheat;
+  border-radius: 3px;
+}
+
+.userBtnUnfollow {
+  grid-row-start: 3;
+  padding: 3px 10px;
+  background-color: wheat;
+  border-radius: 3px;
 }

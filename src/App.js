@@ -1,4 +1,4 @@
-// import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header/Header';
@@ -21,8 +21,8 @@ const App = (props) => {
               <Profile/>
             )} />
             <Route path='/users' render={() => (
-              <UsersContainer />
-            )} />
+                <UsersContainer />
+                )} />
           </Switch>
         </div>
       </div>
