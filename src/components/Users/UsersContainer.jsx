@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
-import { followAC, setUsersAC, unfollowAC, setTotalPagesAC, setCurrentPageAC, setIsFetchingAC } from "../../redux/users-reducer";
+import { followUser, unfollowUser, setUsers, setTotalPages, setCurrentPage, setIsFetching } from "../../redux/users-reducer";
 import Users from "./Users";
 import Preloader from "../Common/Preloader";
 
@@ -23,6 +23,7 @@ class UsersContainer extends Component {
   }
 
   render() {
+
     return (
       <>
         { this.props.isFetching && <Preloader />}
@@ -32,6 +33,8 @@ class UsersContainer extends Component {
           currentPage = {this.props.currentPage}
           setCurrentPage = {this.props.setCurrentPage}
           requestPage = {this.requestPage}
+          followUser = {this.props.followUser}
+          unfollowUser = {this.props.unfollowUser}
         />
       </>
     )
@@ -46,13 +49,6 @@ const mapStateToProps = (state) => ({
   isFetching: state.usersPage.isFetching,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  followUser: (userID) => dispatch(followAC(userID)),
-  unfollowUser: (userID) => dispatch(unfollowAC(userID)),
-  setUsers: (users) => dispatch(setUsersAC(users)),
-  setTotalPages: (totalPages) => dispatch(setTotalPagesAC(totalPages)),
-  setCurrentPage: (newCurrentPage) => dispatch(setCurrentPageAC(newCurrentPage)),
-  setIsFetching: (isFething) => dispatch(setIsFetchingAC(isFething))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps,
+  {followUser, unfollowUser, setUsers, setTotalPages,
+setCurrentPage, setIsFetching})(UsersContainer);
