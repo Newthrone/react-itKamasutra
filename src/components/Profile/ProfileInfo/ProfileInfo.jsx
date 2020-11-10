@@ -1,11 +1,25 @@
 import React from 'react'
-import s from './ProfileInfo.module.css'
+import Preloader from '../../Common/Preloader';
+import s from './ProfileInfo.module.css';
+import defaultAvatarImg from '../../../assets/images/userDefault.jpg';
+import iAgreeImg from '../../../assets/images/iAgree.gif';
+import iDisAgreeImg from '../../../assets/images/doesNotAgree.jpg';
 
 export default function ProfileInfo(props) {
+  if (!props.userProfile) return <Preloader />
+
   return (
     <div>
-      <img className={s.profile__img}
+      <img className={s.profileHero}
         src="http://media.except.nl/media/uploaded_images/asset_image/Nov19-Energy__Environment.jpg" alt="hero"/>
+      <article className={s.profile}>
+        <img className={s.profilePhoto} src={props.userProfile.photos.large || defaultAvatarImg} alt={'profile'} />
+        <div>Обо мне: {props.userProfile.aboutMe}</div>
+        <div> Ищу работу:
+          <img className={s.isFindWorkImg} src={props.userProfile.lookingForAJob ? iAgreeImg : iDisAgreeImg} alt="smile"/>
+          {props.userProfile.lookingForAJobDescription}
+        </div>
+      </article>
     </div>
   )
 }

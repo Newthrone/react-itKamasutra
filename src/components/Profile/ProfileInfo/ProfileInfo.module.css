@@ -1,4 +1,25 @@
-.profile__img {
+.profileHero {
+  display: block;
   width: 100%;
   height: auto;
+}
+
+.profile {
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  padding: 10px 40px;
+}
+
+.profilePhoto {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.isFindWorkImg {
+  display: block;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
 }

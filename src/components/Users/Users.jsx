@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './users.module.css';
 import userPhotoDefault from './../../assets/images/userDefault.jpg';
 import Pagination from '../Pagination/Pagination';
+import { NavLink } from 'react-router-dom';
 
 const Users = (props) => {
   const {users, totalPages, currentPage, setCurrentPage, requestPage, unfollowUser, followUser} = props;
-  console.log(props);
   return (
     <div>
       <Pagination
@@ -16,9 +16,11 @@ const Users = (props) => {
       />
       {users.map(user => <div key={user.id}>
           <article className={styles.user}>
-            <img className={styles.userAvatar} src={user.photos.small != null
-              ? user.photos.small
-              : userPhotoDefault} alt="avatar"/>
+            <NavLink to={'/profile/' + user.id}>
+              <img className={styles.userAvatar} src={user.photos.small != null
+                ? user.photos.small
+                : userPhotoDefault} alt="avatar"/>
+            </NavLink>
             {user.followed
               ? <button className={styles.userBtnFollow} onClick={() => unfollowUser(user.id)}>Unfollow</button>
               : <button className={styles.userBtnUnfollow} onClick={() => followUser(user.id)}>Follow</button>
