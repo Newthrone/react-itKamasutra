@@ -6,7 +6,7 @@ export default function Navbar(props) {
   return (
     <nav className={s.navbar}>
       <div className={s.navbar__item}>
-        <NavLink exact to="/" activeClassName={s.activeLink}>Profile</NavLink>
+        <NavLink exact to="/profile" activeClassName={s.activeLink}>Profile</NavLink>
       </div>
       <div className={s.navbar__item}>
         <NavLink to="/dialogs" activeClassName={s.activeLink}>Messages</NavLink>

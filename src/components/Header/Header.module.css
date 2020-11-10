@@ -1,12 +1,18 @@
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-column: span 2;
   padding: 20px;
   background-color: #b4edf5;
-  /* grid-column-start: 1; */
-  /* grid-column-end: 3; */
-  grid-column: span 2;
 }
 
 .logo {
   width: 40px;
   height: 40px;
+}
+
+.loginBlock a {
+  text-decoration: none;
+  color: teal;
 }
