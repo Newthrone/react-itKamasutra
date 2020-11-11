@@ -13,8 +13,11 @@
   border-radius: 5px;
 }
 
-.userAvatar {
+.userLinkProfile {
   grid-row: 1 / span 2;
+}
+
+.userAvatar {
   width: 70px;
   border-radius: 50%;
 }

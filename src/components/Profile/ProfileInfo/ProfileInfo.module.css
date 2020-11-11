@@ -5,21 +5,54 @@
 }
 
 .profile {
-  display: flex;
-  flex-flow: wrap;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: 1.5rem minmax(1.5rem, min-content)1fr;
+  grid-column-gap: 30px;
+  grid-row-gap: 15px;
   padding: 10px 40px;
 }
 
 .profilePhoto {
+  grid-row: 1 / span 3;
   width: 150px;
   height: 150px;
   object-fit: cover;
+  border-radius: 5px;
 }
 
-.isFindWorkImg {
+.profileAboutMeTitle {
   display: block;
-  width: 80px;
-  height: 80px;
+  margin: 5px 0 0;
+  font-weight: bold;
+}
+
+.profileAboutMeText {
+  display: inline-block;
+  margin: 0 0 0 10px;
+  font-weight: normal;
+}
+
+.profileWork {
+  display: flex;
+  align-items: center;
+  padding: 0 55px 0 0;
+}
+
+.profileWorkStatus {
+  display: inline-block;
+  font-weight: bold;
+  margin: 0 15px 0 0;
+}
+
+.profileWorkStatusBody {
+  font-weight: normal;
+}
+
+.profileWorkImg {
+  right: 0;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
+  border-radius: 3px;
 }
