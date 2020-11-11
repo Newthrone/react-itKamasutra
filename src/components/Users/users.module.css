@@ -22,16 +22,10 @@
   border-radius: 50%;
 }
 
-.userBtnFollow {
+.userBtnFollow, .userBtnUnfollow {
   grid-row-start: 3;
   padding: 3px 10px;
   background-color: wheat;
   border-radius: 3px;
-}
-
-.userBtnUnfollow {
-  grid-row-start: 3;
-  padding: 3px 10px;
-  background-color: wheat;
-  border-radius: 3px;
+  cursor: pointer;
 }

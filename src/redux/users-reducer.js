@@ -1,3 +1,5 @@
+import { getUsersAPI, requestFollowUser, requestUnfollowUser } from '../api/api';
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -6,14 +8,6 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 let initialState = {
-/*   users: [
-    { id: 1, fullName: 'Slava', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss', location: {city: 'Krasnodar', country: 'Russia'}, followed: true, },
-    { id: 2, fullName: 'Andrew', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss too', location: {city: 'Moscow', country: 'Russia'}, followed: false, },
-    { id: 3, fullName: 'Sveta', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss too', location: {city: 'Kirov', country: 'Russia'}, followed: true, },
-    { id: 4, fullName: 'Tayler', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss too', location: {city: 'Boston', country: 'USA'}, followed: false, },
-    { id: 5, fullName: 'Mika', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss too', location: {city: 'Helsinki', country: 'Finland'}, followed: true, },
-    { id: 6, fullName: 'Andrew', photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/100px-NewTux.svg.png', status: 'I\'m a boss too', location: {city: 'Vancouver', country: 'Canada'}, followed: true, },
-  ], */
   users: [],
   currentPage: 1,
   pageSize: 7,
@@ -67,7 +61,6 @@ const usersReducer = (state= initialState, action) => {
   }
 }
 
-export default usersReducer
 
 export const followUser = (userID) => ({type: FOLLOW, userID});
 export const unfollowUser = (userID) => ({type: UNFOLLOW, userID});
@@ -75,3 +68,31 @@ export const setUsers = (users) => ({type: SET_USERS, users});
 export const setTotalPages = (totalPages) => ({type: TOTAL_PAGE, totalPages});
 export const setCurrentPage = (page) => ({type: SET_CURRENT_PAGE, page});
 export const setIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching});
+
+export const getUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
+  dispatch(setIsFetching(true));
+  getUsersAPI(currentPage, pageSize)
+      .then(({data}) => {
+        dispatch(setIsFetching(false));
+        dispatch(setTotalPages(Math.ceil(data.totalCount/pageSize)))
+        dispatch(setUsers(data.items))
+      })
+}
+
+export const requestFollowUserThunkCreator = (userId, callback) => (dispatch) => {
+  requestFollowUser(userId)
+    .then((response) => {
+      if (response.data.resultCode === 0) dispatch(followUser(userId));
+      callback();
+    })
+}
+
+export const requestUnfollowUserThunkCreator = (userId, callback) => (dispatch) => {
+  requestUnfollowUser(userId)
+      .then((response) => {
+        if (response.data.resultCode === 0) dispatch(unfollowUser(userId));
+        callback();
+    })
+}
+
+export default usersReducer

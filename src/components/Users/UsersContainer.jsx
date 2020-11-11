@@ -1,21 +1,15 @@
-import { Component } from "react";
-import { connect } from "react-redux";
-import { followUser, unfollowUser, setUsers, setTotalPages, setCurrentPage, setIsFetching } from "../../redux/users-reducer";
-import { getUsers } from "../../api/api";
-import Users from "./Users";
-import Preloader from "../Common/Preloader";
+import { Component } from 'react';
+import { connect } from 'react-redux';
+import { setCurrentPage, getUsersThunkCreator } from '../../redux/users-reducer';
+import { requestFollowUserThunkCreator, requestUnfollowUserThunkCreator } from '../../redux/users-reducer';
+import Users from './Users';
+import Preloader from '../Common/Preloader';
 
 class UsersContainer extends Component {
 
   requestPage = (currentPage) => {
-    const { pageSize, setIsFetching, setTotalPages, setUsers } = this.props;
-    this.props.setIsFetching(true);
-    getUsers(currentPage, pageSize)
-      .then(({data}) => {
-        setIsFetching(false);
-        setTotalPages(Math.ceil(data.totalCount/pageSize))
-        setUsers(data.items)
-      })
+    const { pageSize } = this.props;
+    this.props.getUsersThunkCreator(currentPage, pageSize)
   }
 
   componentDidMount() {
@@ -33,8 +27,8 @@ class UsersContainer extends Component {
           currentPage = {this.props.currentPage}
           setCurrentPage = {this.props.setCurrentPage}
           requestPage = {this.requestPage}
-          followUser = {this.props.followUser}
-          unfollowUser = {this.props.unfollowUser}
+          requestFollowUserThunkCreator = {this.props.requestFollowUserThunkCreator}
+          requestUnfollowUserThunkCreator = {this.props.requestUnfollowUserThunkCreator}
         />
       </>
     )
@@ -50,5 +44,4 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps,
-  {followUser, unfollowUser, setUsers, setTotalPages,
-setCurrentPage, setIsFetching})(UsersContainer);
+  {setCurrentPage, getUsersThunkCreator, requestFollowUserThunkCreator, requestUnfollowUserThunkCreator})(UsersContainer);

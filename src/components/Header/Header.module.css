@@ -1,10 +1,31 @@
 .header {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   grid-column: span 2;
   padding: 20px;
-  background-color: #b4edf5;
+  /* background-color: #b4edf5; */
+}
+
+.header:before, .header:after {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  content: '';
+}
+
+.header:before {
+  right: 80%;
+  left: 0;
+  background-image: linear-gradient(#b4edf5 80%, #eee5eb 95%);
+}
+
+.header:after {
+  right: 0;
+  left: 20%;
+  background-image: linear-gradient(#b4edf5 80%, #f8e8af 95%);
 }
 
 .logo {

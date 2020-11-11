@@ -1,29 +1,12 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from './users.module.css';
 import userPhotoDefault from './../../assets/images/userDefault.jpg';
 import Pagination from '../Pagination/Pagination';
-import { NavLink } from 'react-router-dom';
-import { requestFollowUser, requestUnfollowUser } from '../../api/api';
 import Button from '../Common/Button';
 
 const Users = (props) => {
-  const {users, totalPages, currentPage, setCurrentPage, requestPage, unfollowUser, followUser} = props;
-
-  const onClickHandlerFollow = (userId, callback) => {
-    requestFollowUser(userId)
-      .then((response) => {
-        if (response.data.resultCode === 0) followUser(userId);
-        callback();
-      })
-  }
-
-  const onClickHandlerUnfollow = (userId, callback) => {
-    requestUnfollowUser(userId)
-      .then((response) => {
-        if (response.data.resultCode === 0) unfollowUser(userId);
-        callback();
-    })
-  }
+  const {users, totalPages, currentPage, setCurrentPage, requestPage, requestUnfollowUserThunkCreator, requestFollowUserThunkCreator} = props;
 
   return (
     <div>
@@ -45,14 +28,14 @@ const Users = (props) => {
                   className={styles.userBtnUnfollow}
                   title={'Unfollow'}
                   onClickHandlers={(callback) => {
-                    onClickHandlerUnfollow(user.id, callback)
+                    requestUnfollowUserThunkCreator(user.id, callback)
                   }}
                 />
               : <Button
                   className={styles.userBtnUnfollow}
                   title={'Follow'}
                   onClickHandlers={(callback) => {
-                    onClickHandlerFollow(user.id, callback)
+                    requestFollowUserThunkCreator(user.id, callback)
                   }}
                 />
             }

@@ -3,7 +3,6 @@ import Post from './Post/Post'
 import s from './MyPosts.module.css'
 
 function MyPosts(props) {
-  // console.log('props', props);
   const [isDisabledBtn, setIsDisabledBtn] = useState(true);
   const { posts, newTextPost } = props;
   const textareaPost = React.createRef();
