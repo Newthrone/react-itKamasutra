@@ -7,7 +7,9 @@ class Pagination extends Component {
     super(props);
     this.state = {
       currentPage: props.currentPage,
+      isShowMessage: false,
     }
+    this.timerId = null;
   }
 
   clickHandler = (page) => {
@@ -17,7 +19,11 @@ class Pagination extends Component {
   }
 
   inputChangeHandler = (event) => {
-    this.setState({currentPage: event.target.value})
+    if (event.target.value <= this.props.totalPages) this.setState({currentPage: event.target.value})
+    else {
+      this.setState({isShowMessage: true});
+      this.timerId = setTimeout(() => this.setState({isShowMessage: false}), 3000);
+    }
   }
 
   keyPressHandler = (event) => {
@@ -26,6 +32,11 @@ class Pagination extends Component {
 
   inputBlurHandler = () => {
     this.setState({currentPage: this.props.currentPage})
+    this.setState({isShowMessage: false})
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timerId);
   }
 
   render() {
@@ -45,15 +56,19 @@ class Pagination extends Component {
         <ul className={styles.pageList}>
           { pages.map(page => {
             if (page === +this.props.currentPage) {
-              return <input
-                type="number"
-                className={classes([styles.pageItem, styles.pageItemInteractive])}
-                value={this.state.currentPage}
-                onKeyPress={this.keyPressHandler}
-                onChange={this.inputChangeHandler}
-                onBlur={this.inputBlurHandler}
-                key={page}
-              />
+              return (
+                <div className={styles.pageItemInteractiveHolder}
+                key={page}>
+                  <input
+                    type="number"
+                    className={classes([styles.pageItem, styles.pageItemInteractive])}
+                    value={this.state.currentPage}
+                    onKeyPress={this.keyPressHandler}
+                    onChange={this.inputChangeHandler}
+                    onBlur={this.inputBlurHandler}
+                  />
+                  {this.state.isShowMessage && <div className={styles.hintMsg}>Всего страниц {totalPages}</div>}
+              </div>)
             }
             return <li
               className={styles.pageItem}

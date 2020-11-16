@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { setCurrentPage, getUsersThunkCreator } from '../../redux/users-reducer';
-import { requestFollowUserThunkCreator, requestUnfollowUserThunkCreator } from '../../redux/users-reducer';
+import { setCurrentPage, getUsersThunkCreator, requestFollowUserThunkCreator, requestUnfollowUserThunkCreator } from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../Common/Preloader';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 class UsersContainer extends Component {
 
@@ -35,6 +35,8 @@ class UsersContainer extends Component {
   }
 }
 
+const AuthRedirectComponent = withAuthRedirect(UsersContainer);
+
 const mapStateToProps = (state) => ({
   users: state.usersPage.users,
   currentPage: state.usersPage.currentPage,
@@ -44,4 +46,4 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps,
-  {setCurrentPage, getUsersThunkCreator, requestFollowUserThunkCreator, requestUnfollowUserThunkCreator})(UsersContainer);
+  {setCurrentPage, getUsersThunkCreator, requestFollowUserThunkCreator, requestUnfollowUserThunkCreator})(AuthRedirectComponent);
