@@ -4,6 +4,7 @@ import { setCurrentPage, getUsersThunkCreator, requestFollowUserThunkCreator, re
 import Users from './Users';
 import Preloader from '../Common/Preloader';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { compose } from 'redux';
 
 class UsersContainer extends Component {
 
@@ -35,8 +36,6 @@ class UsersContainer extends Component {
   }
 }
 
-const AuthRedirectComponent = withAuthRedirect(UsersContainer);
-
 const mapStateToProps = (state) => ({
   users: state.usersPage.users,
   currentPage: state.usersPage.currentPage,
@@ -45,5 +44,8 @@ const mapStateToProps = (state) => ({
   isFetching: state.usersPage.isFetching,
 })
 
-export default connect(mapStateToProps,
-  {setCurrentPage, getUsersThunkCreator, requestFollowUserThunkCreator, requestUnfollowUserThunkCreator})(AuthRedirectComponent);
+  export default compose(
+    connect(mapStateToProps,
+      {setCurrentPage, getUsersThunkCreator, requestFollowUserThunkCreator, requestUnfollowUserThunkCreator}),
+      withAuthRedirect,
+  )(UsersContainer)
