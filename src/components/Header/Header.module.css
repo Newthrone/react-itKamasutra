@@ -5,26 +5,18 @@
   align-items: center;
   grid-column: span 2;
   padding: 20px;
-  background-color: #b4edf5;
-}
-
-.header:before, .header:after {
-  position: absolute;
-  bottom: -10px;
-  height: 30px;
-  content: '';
 }
 
 .header:before {
-  right: 80.8%;
+  z-index: -1;
+  position: absolute;
+  top: 0;
   left: 0;
-  background-image: linear-gradient(#b4edf5 75%, #eee5eb 100%);
-}
-
-.header:after {
-  right: 0;
-  left: 19.2%;
-  background-image: linear-gradient(#b4edf5 75%, #f8e8af 100%);
+  width: 100%;
+  height: 100%;
+  content: '';
+  background: url('http://media.except.nl/media/uploaded_images/asset_image/Nov19-Energy__Environment.jpg') center/cover no-repeat;
+  opacity: .65;
 }
 
 .logo {
@@ -32,7 +24,26 @@
   height: 40px;
 }
 
-.loginBlock a {
+.loginBlock, .loginBlock a {
+  letter-spacing: 1px;
+  font-size: 20px;
   text-decoration: none;
   color: teal;
+  font-weight: bold;
+  text-shadow: -0   -1px  1px #7bf3f3,
+                0   -1px  1px #7bf3f3,
+                -0    1px 1px  #7bf3f3,
+                0    1px  1px #7bf3f3,
+                -1px -0   1px  #7bf3f3,
+                1px -0    1px #7bf3f3,
+                -1px  0   1px  #7bf3f3,
+                1px  0    1px #7bf3f3,
+                -1px -1px 1px  #7bf3f3,
+                1px -1px  1px #7bf3f3,
+                -1px  1px 1px  #7bf3f3,
+                1px  1px  1px #7bf3f3,
+                -1px -1px 1px  #7bf3f3,
+                1px -1px  1px #7bf3f3,
+                -1px  1px 1px  #7bf3f3,
+                1px  1px  1px #7bf3f3;
 }

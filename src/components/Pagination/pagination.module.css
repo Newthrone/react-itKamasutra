@@ -38,6 +38,16 @@
   font-weight: bold;
 }
 
+.pageItemInteractive:hover {
+  border: 1px solid hsla(0, 0%, 0%, 0.5);
+}
+
+.pageItemInteractive::-webkit-outer-spin-button,
+.pageItemInteractive::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .hintMsg {
   z-index: 1;
   position: absolute;
@@ -64,12 +74,6 @@
   content: '';
   background: #000;
   background-color: #2cd3d3;
-}
-
-.pageItemInteractive::-webkit-outer-spin-button,
-.pageItemInteractive::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
 
 .btnEdgePage {

@@ -1,8 +1,11 @@
-import { getProfileUser } from "../api/api";
+import { getProfileUser, getUserStatus, updateUserStatus } from "../api/api";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_TEXT_POST = 'UPDATE-TEXT-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS';
+const SET_START_PROFILE_STATUS = 'SET_START_PROFILE_STATUS';
+const SET_ERROR_SEND_STATUS = 'SET_ERROR_SEND_STATUS';
 
 let initialState = {
   posts: [
@@ -13,6 +16,9 @@ let initialState = {
   ],
   newTextPost: '',
   userProfile: null,
+  profileStatus: null,
+  startProfileStatus: null,
+  hasErrorUpdateStatus: false,
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -35,7 +41,22 @@ const profileReducer = (state = initialState, action) => {
         ...state,
         userProfile: {...action.userProfile},
       }
-
+    case SET_PROFILE_STATUS:
+      return {
+        ...state,
+        profileStatus: action.profileStatus
+      }
+    case SET_START_PROFILE_STATUS:
+      return {
+        ...state,
+        startProfileStatus: action.startProfileStatus,
+        profileStatus: action.startProfileStatus,
+      }
+    case SET_ERROR_SEND_STATUS:
+      return {
+        ...state,
+        hasErrorUpdateStatus: action.hasError,
+      }
     default:
       return state
     }
@@ -45,12 +66,41 @@ const profileReducer = (state = initialState, action) => {
 export const addPostActionCreater = () => ({type: ADD_POST});
 export const updateNewPostTextActionCreater = (text) => ({type: UPDATE_TEXT_POST, text: text});
 export const setUserProfile = (userProfile) => ({type: SET_USER_PROFILE, userProfile: userProfile});
+export const setProfileStatus = (profileStatus) => ({type: SET_PROFILE_STATUS, profileStatus});
+export const setStartProfileStatus = (startProfileStatus) => ({type: SET_START_PROFILE_STATUS, startProfileStatus});
+export const setHasErrorSendStatus = (hasError) => ({type: SET_ERROR_SEND_STATUS, hasError});
 
 export const getProfileThunkCreator = (userId) => (dispatch) => {
   getProfileUser(userId)
     .then(response => {
       dispatch(setUserProfile(response.data));
     })
+}
+
+export const getUserStatusTC = (userId) => (dispatch) => {
+  getUserStatus(userId)
+    .then(response => {
+      dispatch(setStartProfileStatus(response.data));
+    })
+}
+
+export const updateUserStatusTC = () => (dispatch, getState) => {
+  const status = getState().profilePage.profileStatus;
+  const startStatus = getState().profilePage.startProfileStatus;
+  if (status !== startStatus) {
+    updateUserStatus(status)
+      .then(response => {
+        if (response.data.resultCode === 0) {
+          dispatch(setStartProfileStatus(status))
+        }
+      })
+      .catch(data => {
+        console.log('catch data', data);
+        dispatch(setHasErrorSendStatus(true));
+        dispatch(setProfileStatus(startStatus));
+        setTimeout(()=> dispatch(setHasErrorSendStatus(false)), 3000);
+      })
+  }
 }
 
 export default profileReducer;

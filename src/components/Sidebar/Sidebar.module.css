@@ -1,4 +1,5 @@
 .aside {
   padding: 20px;
-  background-image: linear-gradient(90deg, #eee5eb 90%, #f8e8af 100%);
+  background-color: #eee5eb;
+  box-shadow: 0 -1px 3px 0 #eee5eb;
 }
