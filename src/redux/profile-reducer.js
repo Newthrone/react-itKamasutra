@@ -1,4 +1,4 @@
-import { getProfileUser, getUserStatus, updateUserStatus } from "../api/api";
+import { profileAPI } from "../api/api";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_TEXT_POST = 'UPDATE-TEXT-POST';
@@ -71,14 +71,14 @@ export const setStartProfileStatus = (startProfileStatus) => ({type: SET_START_P
 export const setHasErrorSendStatus = (hasError) => ({type: SET_ERROR_SEND_STATUS, hasError});
 
 export const getProfileThunkCreator = (userId) => (dispatch) => {
-  getProfileUser(userId)
+  profileAPI.getProfileUser(userId)
     .then(response => {
       dispatch(setUserProfile(response.data));
     })
 }
 
 export const getUserStatusTC = (userId) => (dispatch) => {
-  getUserStatus(userId)
+  profileAPI.getUserStatus(userId)
     .then(response => {
       dispatch(setStartProfileStatus(response.data));
     })
@@ -88,7 +88,7 @@ export const updateUserStatusTC = () => (dispatch, getState) => {
   const status = getState().profilePage.profileStatus;
   const startStatus = getState().profilePage.startProfileStatus;
   if (status !== startStatus) {
-    updateUserStatus(status)
+    profileAPI.updateUserStatus(status)
       .then(response => {
         if (response.data.resultCode === 0) {
           dispatch(setStartProfileStatus(status))

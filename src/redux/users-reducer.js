@@ -1,4 +1,4 @@
-import { getUsersAPI, requestFollowUser, requestUnfollowUser } from '../api/api';
+import { usersAPI } from '../api/api';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -71,7 +71,7 @@ export const setIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetch
 
 export const getUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
   dispatch(setIsFetching(true));
-  getUsersAPI(currentPage, pageSize)
+  usersAPI.getUsersAPI(currentPage, pageSize)
       .then(({data}) => {
         dispatch(setIsFetching(false));
         dispatch(setTotalPages(Math.ceil(data.totalCount/pageSize)))
@@ -80,7 +80,7 @@ export const getUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
 }
 
 export const requestFollowUserThunkCreator = (userId, callback) => (dispatch) => {
-  requestFollowUser(userId)
+  usersAPI.requestFollowUser(userId)
     .then((response) => {
       if (response.data.resultCode === 0) dispatch(followUser(userId));
       callback();
@@ -88,7 +88,7 @@ export const requestFollowUserThunkCreator = (userId, callback) => (dispatch) =>
 }
 
 export const requestUnfollowUserThunkCreator = (userId, callback) => (dispatch) => {
-  requestUnfollowUser(userId)
+  usersAPI.requestUnfollowUser(userId)
       .then((response) => {
         if (response.data.resultCode === 0) dispatch(unfollowUser(userId));
         callback();
