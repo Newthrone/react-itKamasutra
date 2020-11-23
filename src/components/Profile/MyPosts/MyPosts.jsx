@@ -1,37 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import Post from './Post/Post'
-import s from './MyPosts.module.css'
+import React from 'react';
+import { Field, reduxForm, reset } from 'redux-form';
+import s from './MyPosts.module.css';
+import Post from './Post/Post';
+
+const PostForm = (props) => {
+  const { handleSubmit, pristine, submitting } = props
+
+  return (
+    <form onSubmit={handleSubmit}
+          className={s.postForm}>
+      <Field name='message'
+             component='textarea'
+             className={s.postFormTextArea}
+      />
+      <button type='submit' disabled={pristine || submitting} >Add post</button>
+
+    </form>
+  )
+}
+
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset('post'));
+
+const PostReduxForm = reduxForm({
+  form: 'post',
+  onSubmitSuccess: afterSubmit,
+})(PostForm);
 
 function MyPosts(props) {
-  const [isDisabledBtn, setIsDisabledBtn] = useState(true);
-  const { posts, newTextPost } = props;
-  const textareaPost = React.createRef();
-
-  useEffect(() => setIsDisabledBtn(() => !newTextPost), [newTextPost]);
+  const { posts } = props;
 
   let postsElement = posts
     .map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount} />);
 
-  function onAddPost() {
-    props.addNewPost();
-  }
-
-  function onPostChange() {
-    const text = textareaPost.current.value;
-    props.updateTextPost(text);
+  const onAddPost = ({message}) => {
+    props.addNewPost(message);
   }
 
   return (
     <div className={s.postsBlock}>
       <h3>My posts</h3>
-      <div>
-        <div>
-          <textarea ref={textareaPost} onChange={onPostChange} value={newTextPost} style={{resize: 'none',}} cols="50" rows="10"></textarea>
-        </div>
-        <div>
-          <button disabled={isDisabledBtn} onClick={onAddPost}>Add post</button>
-        </div>
-      </div>
+      <PostReduxForm onSubmit={onAddPost}/>
       <div className={s.posts}>
         { postsElement }
       </div>

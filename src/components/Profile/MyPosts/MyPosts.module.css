@@ -5,3 +5,29 @@
 .postsBlock {
   padding: 20px 40px;
 }
+
+.postForm {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.postFormTextArea {
+  box-sizing: border-box;
+  width: 100%;
+  height: 200px;
+  resize: none;
+  transition: .4s;
+  transform-origin: 0 0;
+}
+.postFormTextArea:empty {
+  height: 50px;
+  transform: scaleX(.2);
+  transition: .4s;
+}
+
+.postFormTextAreaIsActive {
+  align-self: stretch;
+  height: 200px;
+}

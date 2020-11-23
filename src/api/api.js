@@ -24,6 +24,12 @@ export const authAPI = {
   getAuthentication() {
     return instance.get('auth/me')
   },
+  authorization(loginData) {
+    return instance.post('auth/login', loginData)
+  },
+  deAuthorization() {
+    return instance.delete('auth/login')
+  },
 }
 
 export const profileAPI = {
