@@ -2,7 +2,7 @@
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  gap: 20px 15px;
+  gap: 30px 15px;
   width: 400px;
   padding: 20px 25px 50px;
   margin: 50px auto;
@@ -15,6 +15,11 @@
   grid-column: 1 / -1;
   margin: 0;
   text-align: center;
+}
+
+.loginFormInput {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .loginFormCheckbox {
@@ -63,4 +68,5 @@
   grid-column: 1 / -1;
   padding: 10px 25px;
   justify-self: center;
+  cursor: pointer;
 }

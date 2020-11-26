@@ -1,0 +1,16 @@
+.inputHolder {
+  position: relative;
+}
+
+.inputError {
+  border: red 2px solid;
+}
+
+.errorText {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  font-size: 12px;
+  font-weight: bold;
+  color: red;
+}

@@ -6,26 +6,29 @@ import { authorizationTC } from '../../redux/auth-reducer';
 import styles from './Login.module.css'
 import { withProfileRedirect } from '../../hoc/withAuthRedirect';
 import classes from 'html-classes';
+import { email, maxLengthCreator, minLengthCreator, required } from '../../Utils/validators';
+import { Input, Textarea } from '../Common/FormControls';
+
+const maxLengthCreator20 = maxLengthCreator(20);
+const minLengthCreator5 = minLengthCreator(5);
 
 let LoginForm = (props) => {
-  const { handleSubmit } = props;
+  const { handleSubmit, valid } = props;
 
   const classesFakeCheckbox = () => {
     return props.rememberMe
-    ? classes([styles.loginFormLabel, styles.loginFormCheckboxChecked])
-    : classes([styles.loginFormLabel, styles.loginFormCheckboxUnChecked])
+    ? classes([styles.loginFormCheckboxChecked])
+    : classes([styles.loginFormCheckboxUnChecked])
   }
+
 
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit}>
       <h1 className={styles.loginFormTitle}>Login</h1>
-      <label htmlFor='formEmail' className={styles.loginFormLabel}>Введите email</label>
-      <Field name='email' component='input' type='email' placeholder='Login' id='formEmail' required className={styles.loginFormInput} />
-      <label htmlFor='formPassword' className={styles.loginFormLabel}>Введите пароль</label>
-      <Field name='password' component='input' type='password' placeholder='Password' id='formPassword' required className={styles.loginFormInput} />
-      <label htmlFor='formRemember' className={classesFakeCheckbox()}>Запомнить данные</label>
-      <Field name='rememberMe' component='input' type='checkbox' id='formRemember' className={classes([styles.loginFormInput, styles.loginFormCheckbox])} />
-      <button type='submit' className={styles.loginFormSubmit}>Sign in</button>
+      <Field name='email' component={Input} type='text' placeholder='Email' id='formEmail' className={styles.loginFormInput} validate={[email, required, maxLengthCreator20]} label={{htmlFor:'formEmail', text: 'Введите email'}}/>
+      <Field name='password' component={Input} placeholder='Password' id='formPassword' className={styles.loginFormInput} validate={[required, minLengthCreator5]} label={{htmlFor:'formPassword', text: 'Введите пароль'}}/>
+      <Field name='rememberMe' component={Input} type='checkbox' id='formRemember' className={classes([styles.loginFormInput, styles.loginFormCheckbox])} label={{htmlFor:'formRemember', text: 'Запомнить данные', classLabel: classesFakeCheckbox()}}/>
+      <button type='submit' className={styles.loginFormSubmit} disabled={!valid}>Sign in</button>
     </form>
   )
 }
