@@ -2,6 +2,11 @@
   position: relative;
 }
 
+.inputHolderIsHidden {
+  position: absolute;
+  visibility: hidden;
+}
+
 .inputError {
   border: red 2px solid;
 }

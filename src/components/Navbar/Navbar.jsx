@@ -3,10 +3,11 @@ import { NavLink } from 'react-router-dom'
 import s from './Navbar.module.css'
 
 export default function Navbar(props) {
+  const id = props.id ? props.id : '';
   return (
     <nav className={s.navbar}>
       <div className={s.navbar__item}>
-        <NavLink exact to={`/profile/${props.id}`} activeClassName={s.activeLink}>Profile</NavLink>
+        <NavLink exact to={`/profile/${id}`} activeClassName={s.activeLink}>Profile</NavLink>
       </div>
       <div className={s.navbar__item}>
         <NavLink to="/dialogs" activeClassName={s.activeLink}>Messages</NavLink>

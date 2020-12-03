@@ -11,6 +11,13 @@
   border-radius: 8px;
 }
 
+.loginFormError {
+  grid-column: 1 / -1;
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+
 .loginFormTitle {
   grid-column: 1 / -1;
   margin: 0;

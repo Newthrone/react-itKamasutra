@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { setCurrentPage, getUsersThunkCreator, requestFollowUserThunkCreator, requestUnfollowUserThunkCreator } from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../Common/Preloader';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { withAuthRedirect } from '../../hoc/redirect';
 import { compose } from 'redux';
 
 class UsersContainer extends Component {

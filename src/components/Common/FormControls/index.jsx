@@ -12,10 +12,11 @@ export const Input = ({
   label: {htmlFor, text, classLabel},
   }) => {
   const hasError = meta.error && meta.touched;
+  const holderInputIsHidden = () => type === 'checkbox';
   return (
     <>
       <label htmlFor={htmlFor} className={classLabel}>{text}</label>
-      <div className={styles.inputHolder}>
+      <div className={classes(holderInputIsHidden() ? styles.inputHolderIsHidden : styles.inputHolder)}>
         <input id={id}
                className={classes([className, {[styles.inputError]: hasError}])}
                type={type}

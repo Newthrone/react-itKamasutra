@@ -30,6 +30,7 @@
   text-decoration: none;
   color: teal;
   font-weight: bold;
+  outline: none;
   text-shadow: -0   -1px  1px #7bf3f3,
                 0   -1px  1px #7bf3f3,
                 -0    1px 1px  #7bf3f3,
@@ -46,12 +47,15 @@
                 1px -1px  1px #7bf3f3,
                 -1px  1px 1px  #7bf3f3,
                 1px  1px  1px #7bf3f3;
-  cursor: pointer;
 }
 
 .loginBlock {
   z-index: 5;
   position: relative;
+}
+
+.loginBlockIsInteractive {
+  cursor: pointer;
 }
 
 .loginBlock:after {

@@ -17,6 +17,7 @@ let initialState = {
   profileStatus: null,
   startProfileStatus: null,
   hasErrorUpdateStatus: false,
+
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -69,12 +70,18 @@ export const getProfileThunkCreator = (userId) => (dispatch) => {
     .then(response => {
       dispatch(setUserProfile(response.data));
     })
+    .catch(response => {
+      dispatch(setUserProfile({profileIsUndefined: true}));
+    })
 }
 
 export const getUserStatusTC = (userId) => (dispatch) => {
   profileAPI.getUserStatus(userId)
     .then(response => {
       dispatch(setStartProfileStatus(response.data));
+    })
+    .catch(response => {
+      console.error(response);
     })
 }
 

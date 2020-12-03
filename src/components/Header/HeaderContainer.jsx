@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
-import { deleteAuthenticationTC, getAuthenticationThunkCreator } from '../../redux/auth-reducer';
+import { deleteAuthenticationTC } from '../../redux/auth-reducer';
+import { compose } from 'redux';
+import { withRouter } from 'react-router-dom';
 
 class HeaderContainer extends Component {
-  componentDidMount() {
-    this.props.getAuthenticationThunkCreator()
-  }
-
   render() {
     return (
       <Header {...this.props}/>
@@ -22,4 +20,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {getAuthenticationThunkCreator, deleteAuthenticationTC})(HeaderContainer);
+export default compose(
+  connect(mapStateToProps, {deleteAuthenticationTC}),
+  withRouter,
+)(HeaderContainer)

@@ -2,25 +2,32 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Profile from './Profile'
-import { getProfileThunkCreator, getUserStatusTC, updateUserStatusTC, setProfileStatus } from '../../redux/profile-reducer';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { getProfileThunkCreator, setUserProfile, getUserStatusTC, updateUserStatusTC, setProfileStatus } from '../../redux/profile-reducer';
 import { compose } from 'redux';
 
 class ProfileContainer extends Component {
 
 
-  requestProfileData() {
-    let { userId } = this.props.match.params;
+  requestProfileData(userId) {
     this.props.getProfileThunkCreator(userId);
     this.props.getUserStatusTC(userId);
   }
 
+  checkWhatLoad() {
+    let { userId } = this.props.match.params;
+    if (userId) {
+      this.requestProfileData(userId);
+    } else if (this.props.isAuth) {
+      this.requestProfileData(this.props.authId);
+    } else this.props.history.push('/404');
+  }
+
   componentDidMount() {
-    this.requestProfileData();
+    this.checkWhatLoad();
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.match.params.userId !== prevProps.match.params.userId) this.requestProfileData();
+    if (this.props.match.params.userId !== prevProps.match.params.userId) this.checkWhatLoad();
   }
 
   render() {
@@ -43,11 +50,11 @@ const mapStateToProps = (state) => {
     profileStatus: state.profilePage.profileStatus,
     hasErrorUpdateStatus: state.profilePage.hasErrorUpdateStatus,
     authId: state.auth.userId,
+    isAuth: state.auth.isAuth,
   }
 }
 
 export default compose(
-  connect(mapStateToProps, { getProfileThunkCreator, getUserStatusTC, updateUserStatusTC, setProfileStatus }),
+  connect(mapStateToProps, { getProfileThunkCreator, setUserProfile, getUserStatusTC, updateUserStatusTC, setProfileStatus }),
   withRouter,
-  withAuthRedirect,
 )(ProfileContainer);
