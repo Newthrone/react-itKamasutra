@@ -5,9 +5,13 @@ import defaultAvatarImg from '../../../assets/images/userDefault.jpg';
 import iAgreeImg from '../../../assets/images/iAgree.gif';
 import iDisAgreeImg from '../../../assets/images/doesNotAgree.jpg';
 import ProfileStatus from './ProfileStatus';
+// import { Redirect } from 'react-router-dom';
 
 export default function ProfileInfo(props) {
+  // if (props.userProfile?.profileIsUndefined) return <Redirect to='/404'/>
+  // существуют недоступные профили. например 125
   if (!props.userProfile) return <Preloader />
+
   return (
     <div>
       {/* <img className={s.profileHero}
